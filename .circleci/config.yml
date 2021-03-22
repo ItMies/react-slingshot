@@ -6,12 +6,10 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - run: npm i
-      - run: ls /src
       - save_cache:
           paths:
-            - /src/node_modules
-            - /src/dist 
+            - ~/node_modules
+            - ~/dist 
           key: "npm-packages"
       - run: npm run lint
 
