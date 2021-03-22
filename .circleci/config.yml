@@ -9,8 +9,8 @@ jobs:
       - run: npm i
       - save_cache:
           paths:
-            - ~/usr/local/lib/node_modules  # location depends on npm version
-          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            - /src/node_modules  # location depends on npm version
+          key: "npm-packages"
       - run: npm run lint
 
   test:
@@ -20,10 +20,7 @@ jobs:
       - checkout
       - restore_cache:
             keys:
-              # when lock file changes, use increasingly general patterns to restore cache
-              - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-              - node-v1-{{ .Branch }}-
-              - node-v1-
+              - "npm-packages"
       - run: npm run test
   
   analyze:
@@ -33,10 +30,7 @@ jobs:
       - checkout
       - restore_cache:
             keys:
-              # when lock file changes, use increasingly general patterns to restore cache
-              - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-              - node-v1-{{ .Branch }}-
-              - node-v1-
+              - "npm-packages"
       - run: npm run audit
 
 # Orchestrate or schedule a set of jobs
